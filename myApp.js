@@ -14,6 +14,8 @@ app.get("/", (req, res) => {
     res.send("Hello Express")
   })
 
+app.get("/json", logger)
+
 app.get("/json", (req, res) => {
     let result = {"message": "Hello json"} 
     const msgStyle = process.env.MESSAGE_STYLE
@@ -21,11 +23,14 @@ app.get("/json", (req, res) => {
     if (msgStyle === "uppercase") {
       result.message = result.message.toUpperCase()  
     }
-    
+
     res.json(result)
   })
 
-
+function logger(req, res, next) {
+    console.log(`${req.method} ${req.path} - ${req.ip}`)
+    next()
+  }
 
 
 
